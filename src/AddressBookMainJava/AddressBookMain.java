@@ -119,9 +119,10 @@ public class AddressBookMain {
 				System.out.println("Select form below to change: ");
 				Book.remove(i);
 			}
-			}
+		}
 		System.out.println(Book);
 	}
+
 	public static void main(String[] args) {
 
 		int i = 0;
