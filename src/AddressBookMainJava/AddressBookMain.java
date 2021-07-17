@@ -1,19 +1,26 @@
 package AddressBookMainJava;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
+
 import java.util.Scanner;
 
+import java.util.HashMap;
+
+import java.util.*;
 /**
  * @author FATHA Purpose - To create an address book management system
- * Paractice problem
+ * 
  */
 
 public class AddressBookMain {
 
 	ArrayList<Contacts> Book = new ArrayList<>();
 	static Scanner sc = new Scanner(System.in);
+	
+	static HashMap<String, ArrayList<Contacts>> hashmap = new HashMap<>();
+	static AddressBookMain Details = new AddressBookMain();
 
+	
 	/*
 	 * Purpose : Used AddDetails method to add the details of person
 	 */
@@ -124,100 +131,115 @@ public class AddressBookMain {
 		}
 		System.out.println(Book);
 	}
+	
+	public void createAddressBook() {
 
-	public static void main(String[] args) {
-
-		int i = 0;
-
-		System.out.println("Welcome to Address Book Management System");
-
-		AddressBookMain details = new AddressBookMain();
-
-		while (i == 0) {
-			System.out.println("What you want to do: ");
-			System.out.println("1.Add details.\n2.Edit details.\n3.Delete the details");
+		while (true) {
+			System.out.println("Choose what you want to do: ");
+			System.out.println(
+					"1.Create new address book.\n2.Edit existing address book.\n3.Display all address books.\n4.exit");
 			int choose = sc.nextInt();
-			switch (choose) {
-			case 1:
-				details.AddDetails();
-				break;
-			case 2:
-				details.editDetails();
-				break;
-			case 3:
-				details.deleteDetails();
-				break;
-			default:
-				i = 1;
-				System.out.println("Wrong option");
-				details.output();
+
+			if (choose == 4) {
+				System.out.println("Exited");
 				break;
 			}
+
+			switch (choose) {
+			case 1:
+				System.out.println("Enter the name of address book: ");
+				String address_name = sc.next();
+
+				// condition to check for uniqueness of address book.
+				if (hashmap.containsKey(address_name)) {
+					System.out.println("Adress book name exits, enter different name");
+					break;
+				}
+
+				ArrayList<Contacts> new_address_book = new ArrayList<>();
+				Book = new_address_book;
+				while (true) {
+					int choose1;
+					System.out.println("Choose what you want to do: ");
+					System.out.println("1.Add details.\n2.Edit details.\n3.Delete contact.\n4.Exit");
+					choose1 = sc.nextInt();
+					if (choose1 == 4) {
+						System.out.println("Exited");
+						break;
+					}
+					switch (choose1) {
+					case 1:
+						Details.AddDetails();
+						break;
+					case 2:
+						Details.editDetails();
+						break;
+					case 3:
+						Details.deleteDetails();
+						break;
+					default:
+						System.out.println("Choose valid option");
+						break;
+					}
+					hashmap.put(address_name, Book);
+					System.out.println(hashmap);
+				}
+				break;
+
+			case 2:
+				System.out.println("Enter the name of address book: ");
+				String address_name_old = sc.next();
+
+				// condition to check whether address book exists or no.
+				if (hashmap.containsKey(address_name_old)) {
+
+					ArrayList<Contacts> old_address_book = new ArrayList<>();
+					Book = old_address_book;
+					Book = hashmap.get(address_name_old);
+					while (true) {
+						System.out.println("Choose what you want to do: ");
+						System.out.println("1.Add details.\n2.Edit details.\n3.Delete contact.\n4.Exit");
+						int choose2 = sc.nextInt();
+						if (choose2 == 4) {
+							System.out.println("Exited");
+							break;
+						}
+						switch (choose2) {
+						case 1:
+							Details.AddDetails();
+							break;
+						case 2:
+							Details.editDetails();
+							break;
+						case 3:
+							Details.deleteDetails();
+							break;
+						default:
+							System.out.println("Choose valid option");
+							break;
+						}
+						hashmap.put(address_name_old, Book);
+						System.out.println(hashmap);
+					}
+				} else {
+					System.out.println("Enter valid address book name");
+				}
+				break;
+
+			case 3:
+				System.out.println(hashmap);
+				break;
+
+			default:
+				System.out.println("Enter valid option");
+
+			}
 		}
-
-=======
-/**
- * @author FATHA Purpose - To create an address book management system
- */
-class contact {
-
-	private String firstname, lastname, address, city, state, email;
-	private int zip, phonenumber;
-
-	// TODO Auto-generated constructor stub
-
-	public void setStringDetails() {
-
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.email = email;
-		this.zip = zip;
-		this.phonenumber = phonenumber;
-
 	}
 
-	public String getFirstname() {
-		return this.firstname = firstname;
-	}
-
-	public String getLasttname() {
-		return this.lastname = lastname;
-	}
-
-	public String getAddress() {
-		return this.address = address;
-	}
-
-	public String getCity() {
-		return this.city = city;
-	}
-
-	public String getState() {
-		return this.state = state;
-	}
-
-	public String getEmail() {
-		return this.email = email;
-	}
-
-	public int getZip() {
-		return this.zip = zip;
-	}
-
-	public int getNumber() {
-		return this.phonenumber = phonenumber;
-	}
-}
-
-public class AddressBookMain {
 	public static void main(String[] args) {
 
-		System.out.println("Welcome to Address Book Management System");
-
->>>>>>> 654e225ad6b4ad4313549a268f62d2de4d72ba8d
-	}
-
+		System.out.println("Welcome to Address Book program ");
+		Details.createAddressBook();
+}
 }
